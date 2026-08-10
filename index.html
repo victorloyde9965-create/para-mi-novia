@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Quieres ser mi novia?</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            max-width: 400px;
+            width: 90%;
+        }
+        h1 {
+            color: #d63384;
+            font-size: 26px;
+            margin-bottom: 20px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            height: 60px;
+            margin-top: 20px;
+        }
+        button {
+            padding: 12px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+        #btnSi {
+            background-color: #28a745;
+            color: white;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+        }
+        #btnSi:hover {
+            transform: scale(1.1);
+        }
+        #btnNo {
+            background-color: #dc3545;
+            color: white;
+            transition: all 0.1s ease;
+        }
+        .foto-estilo {
+            width: 100%;
+            max-width: 230px;
+            height: auto;
+            border-radius: 15px;
+            margin: 10px auto;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            display: block;
+        }
+        #mensaje {
+            display: none;
+            color: #d63384;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        #miFoto2, #contenidoPrincipal {
+            display: none;
+        }
+        /* Pantalla de inicio personalizada */
+        #pantallaInicio {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+        .texto-inicio {
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .btn-abrir {
+            background-color: white;
+            color: #d63384;
+            font-size: 20px;
+            padding: 12px 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        .btn-abrir:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Tu archivo de música -->
+    <audio id="miMusica" src="musica.mp3" loop></audio>
+
+    <!-- Pantalla inicial: Texto y Botón personalizados -->
+    <div id="pantallaInicio">
+        <div class="texto-inicio">Tengo una duda... 🤔</div>
+        <button class="btn-abrir" onclick="iniciarTodo()">¿Cuál?</button>
+    </div>
+
+    <!-- Contenedor principal de la propuesta -->
+    <div class="container" id="contenidoPrincipal">
+        <!-- Bloque Inicial (Pregunta y Foto 1) -->
+        <h1 id="titulo">¿Quieres ser mi novia? ❤️</h1>
+        <img id="miFoto1" src="foto1.png" alt="Nosotros Inicio" class="foto-estilo">
+
+        <!-- Botones -->
+        <div class="buttons" id="bloqueBotones">
+            <button id="btnSi" onclick="aceptar()">¡Sí!</button>
+            <button id="btnNo" onmouseover="moverBtn()" onclick="moverBtn()">No</button>
+        </div>
+        
+        <!-- Bloque Final -->
+        <div id="mensaje">¡Sabía que dirías que sí! 🥰🎉</div>
+        <img id="miFoto2" src="foto2.png" alt="Nosotros Final" class="foto-estilo">
+    </div>
+
+    <script>
+        const audio = document.getElementById('miMusica');
+
+        function iniciarTodo() {
+            // Esconde la pantalla de inicio y muestra la propuesta
+            document.getElementById('pantallaInicio').style.display = 'none';
+            document.getElementById('contenidoPrincipal').style.display = 'block';
+            
+            // La música arranca de inmediato con volumen real al dar clic
+            audio.play().catch(error => console.log("Error de audio:", error));
+        }
+
+        function moverBtn() {
+            const btnNo = document.getElementById('btnNo');
+            const maxX = window.innerWidth - btnNo.offsetWidth - 50;
+            const maxY = window.innerHeight - btnNo.offsetHeight - 50;
+            
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+            
+            btnNo.style.position = 'fixed';
+            btnNo.style.left = randomX + 'px';
+            btnNo.style.top = randomY + 'px';
+        }
+
+        function aceptar() {
+            // Oculta la primera foto y pregunta
+            document.getElementById('titulo').style.display = 'none';
+            document.getElementById('miFoto1').style.display = 'none';
+            document.getElementById('bloqueBotones').style.display = 'none';
+            
+            // Muestra la sorpresa final con la foto 2
+            document.getElementById('mensaje').style.display = 'block';
+            document.getElementById('miFoto2').style.display = 'block';
+            
+            // La música sigue reproduciéndose
+            audio.play();
+        }
+    </script>
+
+</body>
+</html>
